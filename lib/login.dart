@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-
-
-const api = 'http://127.0.0.1/json_retorno.php';
-
-void fazer_login(){
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+const api = 'http://bielapp.tecnologia.ws/json_retorno.php';
 
 
 
+Future<Map> getData() async{
+  http.Response response = await http.get(api);
+  return json.decode(response.body);
 }
