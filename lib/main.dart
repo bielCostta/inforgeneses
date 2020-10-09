@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inforgeneses/login.dart';
 import 'package:progress_indicator_button/button_stagger_animation.dart';
@@ -5,7 +6,6 @@ import 'package:progress_indicator_button/progress_button.dart';
 
 void main()  {
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -13,6 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Comprar Curso',
+      theme: ThemeData(
+        hintColor: Colors.white,
+        textSelectionColor: Colors.purple,
+        primaryColor: Colors.white,
+
+      ),
       home: MyHomePage(title: 'Inforgeneses'),
     );
   }
@@ -49,73 +55,137 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
     return Scaffold(
-      backgroundColor: Colors.purple,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.purple, // PLANO DE FUNDO ROXO
+      body: SingleChildScrollView(
+        child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              children: [
-
-                TextFormField(
-                  controller: controle_usuario,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.supervised_user_circle),
-                    labelText: 'USUARIO',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-
-                ),
-                Container(
-                  height: 10,
-                  width: 10,
-                  child: TextFormField(
-                    controller: controle_senha,
-                    decoration: InputDecoration(
-                      labelText: 'Senha',
-                      errorText: 'Ensira a senha',
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(
-                        Icons.error,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 50),
-                  width: largura/4,
-                  height: altura/7,
-                  child: ProgressButton(
+          Stack(
+            children: [
+              Container(
+                width: largura,
+                height: altura/1.3,
+                decoration: BoxDecoration(
                     color: Colors.white,
-                    progressIndicatorColor: Colors.deepPurple,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    strokeWidth: 2,
-                    child: Text(
-                      "Entrar",
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 18,
-                      ),
-                    ),
-                    onPressed: (AnimationController controller) {
-                      if (controller.isCompleted) {
-
-                        controller.reverse();
-                      } else {
-                        controller.forward();
-                      }
-                    },
-                  ),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.elliptical(70,60),
+                        bottomRight: Radius.elliptical(70, 60))
                 ),
-              ],
+
+
+              ),
+              Positioned(
+                bottom: 20,
+                  right: 5,
+                  child: Container(
+                    width: largura/2,
+                    child:  Image.asset("assets/LOGO.png",
+                      fit: BoxFit.contain,),
+                  ))
+
+
+            ],
+          ),     //BANNER BRACO + LOGO
+          Container(
+            margin: EdgeInsets.only(top: 20,bottom: 10),
+            width: largura/2,
+            child:TextField(
+              cursorColor: Colors.white,
+              controller: controle_usuario,
+              decoration: InputDecoration(
+                labelText: 'Usuario',
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                prefixText: "  ",
+                suffixIcon: Icon(
+                  Icons.people_alt_rounded,
+                  color: Colors.white,
+                ),
+
+              ),
+
             ),
-          ),
+
+
+          ), // INPUT USUARIO
+          Container(
+            width: largura/2,
+            child: TextFormField(
+              controller: controle_senha,
+              decoration: InputDecoration(
+                labelText: 'Senha',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                      color: Colors.white,)
+
+                ),
+                suffixIcon: Icon(
+                  Icons.vpn_key,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ), // INPUT SENHA
+          Container(
+            margin: EdgeInsets.only(top: 50),
+            width: largura/3,
+            height: altura/7,
+            child: ProgressButton(
+              color: Colors.white,
+              progressIndicatorColor: Colors.deepPurple,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              strokeWidth: 1,
+              child: Text(
+                "Entrar",
+                style: TextStyle(
+                  color: Colors.purple,
+                  fontSize: 18,
+                ),
+              ),
+
+
+              onPressed: (AnimationController controller) async {
+                if (controller.isCompleted) {
+                  controller.reverse();
+
+
+                } else {
+                  controller.forward();
+                FutureBuilder(
+                      future: getData(),
+                      builder: (context, snap){
+                        switch(snap.connectionState) {
+                          case ConnectionState.none:
+                            return (Center(
+                                child: Text('sem conexão', style: TextStyle(
+                                    fontSize: 20, color: Colors.red),)
+                            ));
+                          case ConnectionState.active:
+                            return (Center(
+                                child: Text('CONEXÃO ATIVA', style: TextStyle(
+                                    fontSize: 20, color: Colors.red),)
+                            ));
+                          default:
+                            return (Center(
+                                child: usuario = snap.data[0]['login']
+                            )
+                            );
+                        }
+                      },
+                    );
+
+
+
+              }
+                },
+            ),
+          ), // BOTÃO ENTRAR
 
         ],
+      ),
+
       )
     );
   }

@@ -4,9 +4,17 @@ import 'dart:convert';
 import 'dart:async';
 const api = 'http://bielapp.tecnologia.ws/json_retorno.php';
 
+class login{
+  final String usuario;
+  login({this.usuario});
 
 
-Future<Map> getData() async{
+
+
+}
+
+Future<dynamic> getData() async{
   http.Response response = await http.get(api);
   return json.decode(response.body);
 }
+
