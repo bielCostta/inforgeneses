@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inforgeneses/login.dart';
@@ -51,11 +52,15 @@ class _MyHomePageState extends State<MyHomePage> {
     //============== VARIAVEL GERAL ==================
     double altura = MediaQuery.of(context).size.width;
     double largura = MediaQuery.of(context).size.height;
+
+    Color azul    = Colors.lightBlue;
+    Color branco  = Colors.white;
+
     //=================================================
 
 
     return Scaffold(
-      backgroundColor: Colors.purple, // PLANO DE FUNDO ROXO
+      backgroundColor: azul, // PLANO DE FUNDO ROXO
       body: SingleChildScrollView(
         child: Column(
         children: [
@@ -65,22 +70,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: largura,
                 height: altura/1.3,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: branco,
                     borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.elliptical(70,60),
+                        bottomLeft: Radius.elliptical(0,100),
                         bottomRight: Radius.elliptical(70, 60))
                 ),
 
 
               ),
-              Positioned(
-                bottom: 20,
-                  right: 5,
-                  child: Container(
-                    width: largura/2,
-                    child:  Image.asset("assets/LOGO.png",
+              Center(
+               heightFactor: 5,
+               child: Container(
+                    width: largura/2.5,
+                    child:  Image.asset("assets/logo.png",
                       fit: BoxFit.contain,),
-                  ))
+                  )) //IMAGEM LOGO
 
 
             ],
@@ -89,43 +93,46 @@ class _MyHomePageState extends State<MyHomePage> {
             margin: EdgeInsets.only(top: 20,bottom: 10),
             width: largura/2,
             child:TextField(
-              cursorColor: Colors.white,
+
               controller: controle_usuario,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.people_alt_rounded,
+                    color: branco),
+                prefixText: "  ",
                 labelText: 'Usuario',
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: branco),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                prefixText: "  ",
-                suffixIcon: Icon(
-                  Icons.people_alt_rounded,
-                  color: Colors.white,
-                ),
+
 
               ),
+              style: TextStyle(
+                color: Colors.white,
+              )
 
             ),
-
-
           ), // INPUT USUARIO
           Container(
             width: largura/2,
-            child: TextFormField(
-              controller: controle_senha,
-              decoration: InputDecoration(
-                labelText: 'Senha',
-                border: OutlineInputBorder(
+            child:TextField(
+                controller: controle_senha,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.vpn_key,
+                      color: branco),
+                  prefixText: "  ",
+                  labelText: 'Senha',
+                  labelStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      color: Colors.white,)
+                  ),
+
 
                 ),
-                suffixIcon: Icon(
-                  Icons.vpn_key,
+                style: TextStyle(
                   color: Colors.white,
-                ),
-              ),
+                )
+
             ),
           ), // INPUT SENHA
           Container(
@@ -140,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text(
                 "Entrar",
                 style: TextStyle(
-                  color: Colors.purple,
+                  color: azul,
                   fontSize: 18,
                 ),
               ),
@@ -153,30 +160,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 } else {
                   controller.forward();
-                FutureBuilder(
-                      future: getData(),
-                      builder: (context, snap){
-                        switch(snap.connectionState) {
-                          case ConnectionState.none:
-                            return (Center(
-                                child: Text('sem conexão', style: TextStyle(
-                                    fontSize: 20, color: Colors.red),)
-                            ));
-                          case ConnectionState.active:
-                            return (Center(
-                                child: Text('CONEXÃO ATIVA', style: TextStyle(
-                                    fontSize: 20, color: Colors.red),)
-                            ));
-                          default:
-                            return (Center(
-                                child: usuario = snap.data[0]['login']
-                            )
-                            );
-                        }
-                      },
-                    );
+                  String user = controle_usuario.text;
 
-
+                  // Navigator.push(context, MaterialPageRoute(
+                  //     builder: (context) => Pagina_inicial()
+                  // )
+                  // );
+                  Login(
+                    usuario: "gabriel",
+                    senha: "123"
+                  ).buscar();
 
               }
                 },
