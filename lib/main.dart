@@ -1,13 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'file:///C:/Users/Gabriel/StudioProjects/inforgeneses/lib/BACK-ANd/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:inforgeneses/PAGINA_INCIAL/Pagina_inicial.dart';
 import 'dart:convert';
-
 import 'package:progress_indicator_button/progress_button.dart';
+
 const api = 'http://bielapp.tecnologia.ws/json_retorno.php';
 
 
@@ -29,8 +27,7 @@ class MyApp extends StatelessWidget {
             OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide: BorderSide(color: Colors.white)),
-                focusedBorder:
-            OutlineInputBorder(
+                focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide: BorderSide(color: Colors.amber)),
             hintStyle: TextStyle(color: Colors.amber),
@@ -60,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final  controle_usuario  = new TextEditingController();
   final  controle_senha    = new TextEditingController();
   // ============================================
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
 
@@ -72,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Color azul    = Colors.lightBlue;
     Color branco  = Colors.white;
-    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
     //=================================================
 
@@ -82,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: azul, // PLANO DE FUNDO ROXO
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Stack(
             children: [
@@ -120,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 prefixText: "  ",
                 labelText: "Usuario",
                 labelStyle: TextStyle(color: branco),
-                border: OutlineInputBorder(),
 
 
               ),
@@ -183,21 +178,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   int i = 0; // Variavel que percorre json
                   http.Response response = await http.get(api); //conecta com a API
 
-                  var login_input,senha_input; // VARIAVEIS QUE REPRESENTAM OS DADOS INSERIDOS NO INPUT
+                  var login_API,senha_API,nome_API,email_API; // VARIAVEIS QUE REPRESENTAM OS DADOS INSERIDOS NO INPUT
 
                   //================ DO WHILE QUE PERCORRE E VALIDA USUARIO E SENNHA =========
                   do {
-                    login_input = json.decode(response.body)[i]['login'];
-                    senha_input = json.decode(response.body)[i]['senha'];
+                    login_API = json.decode(response.body)[i]['login'];
+                    senha_API = json.decode(response.body)[i]['senha'];
+                    nome_API  = json.decode(response.body)[i]['nome'];
+                    email_API = json.decode(response.body)[i]['email'];
 
-                    if(login_input == user && senha_input == pass){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => Pagina_inicial())
+                    if(login_API == user && senha_API == pass){
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) => Pagina_inicial(
+                            nome: nome_API,
+                            usuario: login_API,
+                            email: email_API,
+                          ))
                       );
                       break;
 
                     }
-                    if(login_input != user || senha_input != pass ){
+                    if(login_API != user || senha_API != pass ){
                       _scaffoldKey.currentState.showSnackBar(
                           new SnackBar(
                             backgroundColor: branco,
@@ -216,14 +217,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller.reverse();
                     }
                     i++;
-                  }while( login_input != user);
+                  }while( login_API != user);
                   //==========================================================================
 
                 }
                 },
             ),
           ), // BOTÃO ENTRAR
-
         ],
       ),
 
