@@ -177,48 +177,68 @@ class _MyHomePageState extends State<MyHomePage> {
                   String pass = controle_senha.text;
                   int i = 0; // Variavel que percorre json
                   http.Response response = await http.get(api); //conecta com a API
+                    if(response.statusCode == 200){
+                      var login_API,senha_API,nome_API,email_API; // VARIAVEIS QUE REPRESENTAM OS DADOS INSERIDOS NO INPUT
 
-                  var login_API,senha_API,nome_API,email_API; // VARIAVEIS QUE REPRESENTAM OS DADOS INSERIDOS NO INPUT
+                      //================ DO WHILE QUE PERCORRE E VALIDA USUARIO E SENNHA =========
+                      do {
+                        login_API = json.decode(response.body)[i]['login'];
+                        senha_API = json.decode(response.body)[i]['senha'];
+                        nome_API  = json.decode(response.body)[i]['nome'];
+                        email_API = json.decode(response.body)[i]['email'];
 
-                  //================ DO WHILE QUE PERCORRE E VALIDA USUARIO E SENNHA =========
-                  do {
-                    login_API = json.decode(response.body)[i]['login'];
-                    senha_API = json.decode(response.body)[i]['senha'];
-                    nome_API  = json.decode(response.body)[i]['nome'];
-                    email_API = json.decode(response.body)[i]['email'];
+                        if(login_API == user && senha_API == pass){
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                              builder: (context) => Pagina_inicial(
+                                nome: nome_API,
+                                usuario: login_API,
+                                email: email_API,
+                              ))
+                          );
+                          break;
 
-                    if(login_API == user && senha_API == pass){
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) => Pagina_inicial(
-                            nome: nome_API,
-                            usuario: login_API,
-                            email: email_API,
-                          ))
-                      );
-                      break;
+                        }
+                        if(login_API != user || senha_API != pass ){
+                          _scaffoldKey.currentState.showSnackBar(
+                              new SnackBar(
+                                  backgroundColor: branco,
+                                  content: Row(
+                                    children: [
+                                      Icon(Icons.thumb_down,color: azul,),
+                                      SizedBox(width: 20),
+                                      Expanded(child:
+                                      Text('Usuario ou senha incorreto',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: azul,
+                                        ),),)
+                                    ],
+                                  )));
+                          controller.reverse();
+                        }
+                        i++;
+                      }while( login_API != user);
+                      //==========================================================================
 
-                    }
-                    if(login_API != user || senha_API != pass ){
+
+                    }else{
                       _scaffoldKey.currentState.showSnackBar(
                           new SnackBar(
-                            backgroundColor: branco,
+                              backgroundColor: branco,
                               content: Row(
                                 children: [
-                                  Icon(Icons.thumb_down,color: azul,),
+                                  Icon(Icons.cancel,color: azul,),
                                   SizedBox(width: 20),
                                   Expanded(child:
-                                  Text('Usuario ou senha incorreto',
+                                  Text('Erro de conexão com API',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                        color: azul,
-                                        ),),)
+                                      color: azul,
+                                    ),),)
                                 ],
-                              )));
-                      controller.reverse();
-                    }
-                    i++;
-                  }while( login_API != user);
-                  //==========================================================================
+                              )));;
+                              controller.reverse();
+                    } //CONDIÇÃO PARA QUANDO NÃO CONECTAR COM API
 
                 }
                 },

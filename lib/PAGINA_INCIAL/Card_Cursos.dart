@@ -23,6 +23,12 @@ class _cardsState extends State<cards> {
 
   @override
   Widget build(BuildContext context) {
+//=================== VARIAVEIS LOBAIS =============
+    double altura = MediaQuery.of(context).size.width;
+    double largura = MediaQuery.of(context).size.height;
+
+    Color azul    = Colors.lightBlue; //COR AZUL DO TEMA
+    Color branco  = Colors.white;     //COR BRANCA DO TEMA
 
     String Curso      = widget.curso;
     String Categoria  =  widget.categoria;
@@ -30,10 +36,8 @@ class _cardsState extends State<cards> {
     String preco      = widget.preco;
     String id         = widget.id;
 
-
-
     NetworkImage img = NetworkImage(Imagem);
-
+//===================================================
     return Container(
         height: 124.0,
         margin: const EdgeInsets.symmetric(
@@ -41,8 +45,8 @@ class _cardsState extends State<cards> {
           horizontal: 20.0,
         ),
         child: new InkWell(
-          splashColor: Colors.indigoAccent,
-          hoverColor: Colors.indigo,
+          splashColor: branco,
+          hoverColor: branco,
           borderRadius: BorderRadius.circular(20),
           onTap: (){},
           child: Stack(
@@ -52,12 +56,13 @@ class _cardsState extends State<cards> {
                 height: 124.0,
                 margin: new EdgeInsets.only(left: 42.0),
                 decoration: new BoxDecoration(
-                  color: new Color.fromRGBO(44, 44, 98, 1),
+                  //border: Border.all(color: branco),
+                  color: azul,
                   shape: BoxShape.rectangle,
                   borderRadius: new BorderRadius.circular(8.0),
                   boxShadow: <BoxShadow>[
                     new BoxShadow(
-                      color: Colors.black12,
+                      color: Colors.black38,
                       blurRadius: 10.0,
                       offset: new Offset(0.0, 10.0),
                     ),
@@ -69,23 +74,23 @@ class _cardsState extends State<cards> {
                     ListTile(
                       title: Text(Curso,textAlign: TextAlign.left,
                         style: TextStyle(
-                            color: Colors.white,
+                            color: branco,
                             fontWeight: FontWeight.w600,
-                            fontSize: 22
+                            fontSize: 16
                         ),),
                       subtitle: Text(Categoria,textAlign: TextAlign.left,
                         style: TextStyle(
-                            color: Colors.grey,
+                            color: Colors.black54,
                             fontWeight: FontWeight.w600,
                             fontSize: 13
                         ),),
-                    ),  //PEÇA E CLIENTE
+                    ),  //CURSO E CATEGORIA
                     Divider(
                       height: 0.1,
-                      indent: 20,
-                      endIndent: 150,
+                      indent: largura/35,  //LOICA QUE DEFINE DISTANCIA DE ONDE COMEÇA O DIVIDER
+                      endIndent: largura/6,//LOICA QUE DEFINE DISTANCIA DE ONDE TERMINA O DIVIDER
                       thickness: 1.5,
-                      color: Colors.blue,
+                      color: branco,
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 10),
@@ -93,12 +98,19 @@ class _cardsState extends State<cards> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              Icon(Icons.print,color:Colors.grey,size: 20,),
-                              Text(preco,style: TextStyle(color: Colors.grey),),
-                              Icon(Icons.date_range,color:Colors.grey,size: 20,),
-                              Text(id,style: TextStyle(color: Colors.grey),)
+                              //Icon(Icons.attach_money,color:azul,size: 14,),
+                              Text("Preço: ",
+                                style: TextStyle(
+                                    color: branco,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600),),
+                              Text("$preco R\$",
+                              style: TextStyle(
+                              color: Colors.black54,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600),)
                             ],
                           ),
                         )
@@ -115,7 +127,7 @@ class _cardsState extends State<cards> {
                   child: Stack(
                     children: <Widget>[
                       Container(
-                        width: 105,
+                        width: 110,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                               colors: [Colors.blue,Colors.indigo],
@@ -126,10 +138,10 @@ class _cardsState extends State<cards> {
                               fit: BoxFit.cover
                           ),
                           border: Border.all(
-                            color: Colors.blue,
+                            color: Colors.white,
                             width: 1.5,
                           ),
-                          borderRadius: BorderRadius.circular(70),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
 
                       ),

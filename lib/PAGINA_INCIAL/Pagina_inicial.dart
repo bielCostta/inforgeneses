@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:inforgeneses/BACK-ANd/login.dart';
+import 'package:inforgeneses/BACK-ANd/Card_JSON.dart';
+import 'package:inforgeneses/BACK-ANd/CARD_API.dart';
 import 'package:inforgeneses/PAGINA_INCIAL/Card_Cursos.dart';
 import 'package:http/http.dart' as http;
 const api_cursos = 'http://bielapp.tecnologia.ws/json_retorno_Cursos.php';
@@ -23,57 +24,64 @@ class Pagina_inicial extends StatefulWidget {
 }
 
 
-
-
-
 class _Pagina_inicialState extends State<Pagina_inicial> {
-  int ID; //VALOR DE QUANTOS CARDS VAI SER CRIADO PUXADO PELA API
 
-  Future<int> percorrer() async {
-    int i = 0; // Variavel que percorre json
-    http.Response response = await http.get(api_cursos); //conecta com a API
-    http.Response geral = await http.get(api_geral_cursos);
+  int ID = 0;
 
-    for(i; i<=ID; i++){
-      return json.decode(response.body)[i]["id"];
+DadosGerais_Cursos() async {
+    http.Response GeralCursos = await http.get(apiGeralCursos);
+    if(GeralCursos.statusCode == 200){
+      var gera = json.decode(GeralCursos.body);
+      int retorno = int.parse(gera[0]["Qtd_cursos"].toString());
+
+      this.ID = retorno;
+    }else{
+      print('erro');
     }
+
+
 
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-
+    DadosGerais_Cursos();
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
-      appBar: AppBar(),
-      drawer: Drawer(),
-      body: FutureBuilder<int>(
-        future: ,
+      backgroundColor: Colors.blueGrey,
+      appBar: AppBar(backgroundColor: Colors.lightBlue),
+      drawer: Drawer(
+
+      ),
+      body: FutureBuilder<List<Cards>>(
+        future: cursos_lista().decode(),
         builder: (context,snapshot){
-          if(!snapshot.hasData){
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              ),
-            );
-          }else{
-            return ListView.builder(
-                itemCount: ID,
-                itemBuilder: (context, ID){
-                  return cards(
-                    curso: "curso "+"",
-                    categoria: "categoria",
-                    imagem: "imagem",
-                    preco: "peco",
-                    descricao: "descricao",
-                    id: "ID",
-                  );
-                }
-            );
-
-
+          switch(snapshot.connectionState) {
+            case ConnectionState.waiting: return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              );              //widget para quando tiver carreando
+            case ConnectionState.none: return Center(
+                child: Text(
+                  'Sem Conexão', style: TextStyle(color: Colors.white),),
+              );               //Widget para quando não tiver dados
+            case ConnectionState.done: return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, ID) {
+                    return cards(
+                      curso:      "${snapshot.data[ID].curso}",
+                      categoria:  "${snapshot.data[ID].categoria}",
+                      imagem:     "${snapshot.data[ID].imagem}",
+                      preco:      "${snapshot.data[ID].preco}",
+                      descricao:  "${snapshot.data[ID].descricao}",
+                      id:         "${snapshot.data[ID].id}",
+                    );
+                  }
+              );    // Widget que mostra os cards dos cursos
+            default:  return Center(
+                child: Text(
+                  'Sem Conexão', style: TextStyle(color: Colors.white),),
+              );
           }
         },
       )
