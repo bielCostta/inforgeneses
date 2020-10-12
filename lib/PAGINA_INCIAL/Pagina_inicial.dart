@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:inforgeneses/BACK-ANd/Card_JSON.dart';
 import 'package:inforgeneses/BACK-ANd/CARD_API.dart';

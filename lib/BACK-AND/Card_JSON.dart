@@ -1,7 +1,4 @@
 
-
-import 'package:inforgeneses/PAGINA_INCIAL/Card_Cursos.dart';
-
 class Cards{
 
   final String id,curso,categoria,imagem,preco,descricao;

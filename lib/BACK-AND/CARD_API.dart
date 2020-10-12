@@ -1,7 +1,6 @@
 
 import 'package:http/http.dart' as http;
 import 'package:inforgeneses/BACK-ANd/Card_JSON.dart';
-import 'package:inforgeneses/PAGINA_INCIAL/Pagina_inicial.dart';
 import 'dart:convert';
 
 final api = 'http://bielapp.tecnologia.ws/json_retorno_Cursos.php';
