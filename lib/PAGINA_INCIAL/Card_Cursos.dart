@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:inforgeneses/CURSOS_DETALHES/detalheCurso.dart';
 
 class cards extends StatefulWidget {
   @override
@@ -24,8 +25,8 @@ class _cardsState extends State<cards> {
   @override
   Widget build(BuildContext context) {
 //=================== VARIAVEIS LOBAIS =============
-    double altura = MediaQuery.of(context).size.width;
-    double largura = MediaQuery.of(context).size.height;
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
 
     Color azul    = Colors.lightBlue; //COR AZUL DO TEMA
     Color branco  = Colors.white;     //COR BRANCA DO TEMA
@@ -35,6 +36,7 @@ class _cardsState extends State<cards> {
     String Imagem     = widget.imagem;
     String preco      = widget.preco;
     String id         = widget.id;
+    String Descricao  = widget.descricao;
 
     NetworkImage img = NetworkImage(Imagem);
 //===================================================
@@ -48,7 +50,19 @@ class _cardsState extends State<cards> {
           splashColor: branco,
           hoverColor: branco,
           borderRadius: BorderRadius.circular(20),
-          onTap: (){},
+          onTap: (){
+
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) => detalhes(
+                  curso: Curso,
+                  imagem: Imagem,
+                  categoria: Categoria,
+                  preco: preco,
+                  id: id,
+                  descricao: Descricao,
+                )));
+
+          },
           child: Stack(
             children: <Widget>[
               Container(
@@ -87,8 +101,8 @@ class _cardsState extends State<cards> {
                     ),  //CURSO E CATEGORIA
                     Divider(
                       height: 0.1,
-                      indent: largura/35,  //LOICA QUE DEFINE DISTANCIA DE ONDE COMEÇA O DIVIDER
-                      endIndent: largura/6,//LOICA QUE DEFINE DISTANCIA DE ONDE TERMINA O DIVIDER
+                      indent: largura/20,  //LOICA QUE DEFINE DISTANCIA DE ONDE COMEÇA O DIVIDER
+                      endIndent: largura/3,//LOICA QUE DEFINE DISTANCIA DE ONDE TERMINA O DIVIDER
                       thickness: 1.5,
                       color: branco,
                     ),

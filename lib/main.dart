@@ -65,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
 //============== VARIAVEL GERAL ==================
-    double altura = MediaQuery.of(context).size.width;
-    double largura = MediaQuery.of(context).size.height;
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
 
     Color azul    = Colors.lightBlue;
     Color branco  = Colors.white;
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Container(
                 width: largura,
-                height: altura/1.5,
+                height: altura/2.5,
                 decoration: BoxDecoration(
                     color: branco,
                     borderRadius: BorderRadius.only(
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 padding: EdgeInsets.all(50),
                 width: largura,
-                height: altura/1.5,
+                height: altura/2.5,
                 child:  Center(
                   child: Image.asset("assets/logo.png",
                     fit: BoxFit.contain,),
@@ -107,14 +107,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),     //BANNER BRACO + LOGO
           Container(
             margin: EdgeInsets.only(top: 20,bottom: 10),
-            width: largura/2,
+            width: largura/1.2,
             child:TextFormField(
               controller: controle_usuario,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.people_alt_rounded,
                     color: branco),
                 prefixText: "  ",
-                labelText: "Usuario",
+                labelText: "E-mail",
                 labelStyle: TextStyle(color: branco),
 
 
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ), // INPUT USUARIO
           Container(
-            width: largura/2,
+            width: largura/1.2,
             child:TextField(
               obscureText: true,
                 controller: controle_senha,
@@ -150,8 +150,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ), // INPUT SENHA
           Container(
             margin: EdgeInsets.only(top: 40),
-            width: largura/3,
-            height: altura/7,
+            width: largura/1.5,
+            height: altura/13,
             child: ProgressButton(
               color: Colors.white,
               progressIndicatorColor: Colors.deepPurple,
@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 else {
                   controller.forward(); //CONTROLE DE ANIMAÇÃO DO BOTÃO DE ENTRAR
 
-                  String user = controle_usuario.text;
+                  String email = controle_usuario.text;
                   String pass = controle_senha.text;
                   int i = 0; // Variavel que percorre json
                   http.Response response = await http.get(api); //conecta com a API
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         nome_API  = json.decode(response.body)[i]['nome'];
                         email_API = json.decode(response.body)[i]['email'];
 
-                        if(login_API == user && senha_API == pass){
+                        if(email_API == email && senha_API == pass){
                           Navigator.pushReplacement(context, MaterialPageRoute(
                               builder: (context) => Pagina_inicial(
                                 nome: nome_API,
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           break;
 
                         }
-                        if(login_API != user || senha_API != pass ){
+                        if(email_API != email || senha_API != pass ){
                           _scaffoldKey.currentState.showSnackBar(
                               new SnackBar(
                                   backgroundColor: branco,
@@ -217,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           controller.reverse();
                         }
                         i++;
-                      }while( login_API != user);
+                      }while( login_API != email);
                       //==========================================================================
 
 
