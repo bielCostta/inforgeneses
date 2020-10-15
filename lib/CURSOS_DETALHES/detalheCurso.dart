@@ -38,7 +38,7 @@ class _detalhesState extends State<detalhes> {
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.only(right: 10),
-            child:Text("${widget.preco},00 R\$ ",style: TextStyle(color: branco,fontSize: 18),textAlign: TextAlign.center,),
+            child:Text("R\$ ${widget.preco},00  ",style: TextStyle(color: branco,fontSize: 18),textAlign: TextAlign.center,),
           ),
         ],
         backgroundColor: azul,
