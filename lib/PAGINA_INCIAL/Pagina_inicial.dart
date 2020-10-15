@@ -36,10 +36,11 @@ class _Pagina_inicialState extends State<Pagina_inicial> {
     Color branco = Colors.white; //COR BRANCA DO TEMA
 
     return Scaffold(
+      key: _scaffoldKey,
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () => _scaffoldKey
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
             icon: Icon(Icons.menu,color: branco),
           ),
           centerTitle: true,

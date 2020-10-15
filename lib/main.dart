@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Comprar Curso',
       theme: ThemeData(
         hintColor: Colors.white,
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Color azul    = Colors.lightBlue;
     Color branco  = Colors.white;
 
-    //=================================================
+ //=================================================
 
 
     return Scaffold(
@@ -170,7 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (controller.isCompleted) {
                   controller.reverse();
                 }
-                else {
+                else
+                  {
                   controller.forward(); //CONTROLE DE ANIMAÇÃO DO BOTÃO DE ENTRAR
 
                   String email = controle_usuario.text;

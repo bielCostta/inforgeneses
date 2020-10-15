@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inforgeneses/CARRINHO_COMPRAS/Card_carrinho.dart';
 import 'package:inforgeneses/PAGINA_INCIAL/Card_Cursos.dart';
@@ -45,10 +46,19 @@ class _CarrinhoState extends State<Carrinho> {
 
     return Scaffold(
         backgroundColor: azul,
+        appBar: AppBar(
+          centerTitle: true,
+          title:  Text('Carrinho de compras', style: TextStyle(color: azul)),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              
+              // FutureBuilder(
+              //
+              //     builder: (context,id){
+              //
+              // }),
+
             ],
           )
         )
