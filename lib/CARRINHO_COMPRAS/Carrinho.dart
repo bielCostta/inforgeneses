@@ -1,30 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:inforgeneses/CARRINHO_COMPRAS/Card_carrinho.dart';
+import 'package:inforgeneses/PAGINA_INCIAL/Card_Cursos.dart';
+
 
 class Carrinho extends StatefulWidget {
+  String descricao;
+  String imagem;
+  String categoria;
+  String id;
+  String curso;
+  String preco;
+  Carrinho({this.id,this.curso,this.preco,this.descricao,this.imagem,this.categoria});
+
+
   @override
   _CarrinhoState createState() => _CarrinhoState();
 }
 
 class _CarrinhoState extends State<Carrinho> {
+
+
   @override
   Widget build(BuildContext context) {
-    //=================== VARIAVEIS LOBAIS =============
-    double altura = MediaQuery.of(context).size.height;
-    double largura = MediaQuery.of(context).size.width;
+    var descricao = widget.descricao;
+    String imagem = widget.descricao;
+    var categoria = widget.descricao;
+    String id = widget.descricao;
+    String curso = widget.descricao;
+    String preco = widget.descricao;
 
-    Color azul    = Colors.lightBlue; //COR AZUL DO TEMA
-    Color branco  = Colors.white;     //COR BRANCA DO TEMA
+    //=================== VARIAVEIS LOBAIS =============
+    double altura = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double largura = MediaQuery
+        .of(context)
+        .size
+        .width;
+
+    Color azul = Colors.lightBlue; //COR AZUL DO TEMA
+    Color branco = Colors.white; //COR BRANCA DO TEMA
 
 
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-
-          ],
-        ) ,
-      ),
+        backgroundColor: azul,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              
+            ],
+          )
+        )
     );
   }
 }

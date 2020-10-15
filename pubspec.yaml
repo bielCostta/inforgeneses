@@ -28,15 +28,12 @@ dependencies:
   http: ^0.12.2
   progress_indicator_button: ^0.0.3
   bloc_pattern: ^2.5.1
+  dio: ^3.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
 
   # The following line ensures that the Material Icons font is

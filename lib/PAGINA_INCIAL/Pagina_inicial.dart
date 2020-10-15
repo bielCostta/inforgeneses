@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inforgeneses/BACK-ANd/Card_JSON.dart';
 import 'package:inforgeneses/BACK-ANd/CARD_API.dart';
+import 'package:inforgeneses/Drawer/Drawer_person.dart';
 import 'package:inforgeneses/PAGINA_INCIAL/Card_Cursos.dart';
 const api_cursos = 'http://bielapp.tecnologia.ws/json_retorno_Cursos.php';
 
@@ -24,18 +25,12 @@ class Pagina_inicial extends StatefulWidget {
 
 class _Pagina_inicialState extends State<Pagina_inicial> {
 
-
   @override
   Widget build(BuildContext context) {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 //=================== VARIAVEIS LOBAIS =============
-    double altura = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double largura = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
 
     Color azul = Colors.lightBlue; //COR AZUL DO TEMA
     Color branco = Colors.white; //COR BRANCA DO TEMA
@@ -43,6 +38,10 @@ class _Pagina_inicialState extends State<Pagina_inicial> {
     return Scaffold(
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () => _scaffoldKey
+            icon: Icon(Icons.menu,color: branco),
+          ),
           centerTitle: true,
           title: Text('Cursos', style: TextStyle(color: branco)),
           shadowColor: Colors.black54,
@@ -62,7 +61,7 @@ class _Pagina_inicialState extends State<Pagina_inicial> {
             )
           ],
         ),
-        drawer: Drawer(),
+        drawer: Drawer_personalizado(usuario: widget.usuario,email: widget.email,nome: widget.nome,),
         body: FutureBuilder<List<Cards>>(
           future: cursos_lista().decode(),
           builder: (context, snapshot) {
@@ -101,7 +100,6 @@ class _Pagina_inicialState extends State<Pagina_inicial> {
             }
           },
         )
-
 
     );
 

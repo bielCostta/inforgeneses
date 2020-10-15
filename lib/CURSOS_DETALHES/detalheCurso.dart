@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inforgeneses/CARRINHO_COMPRAS/Carrinho.dart';
 
 class detalhes extends StatefulWidget {
   final String curso;
@@ -135,7 +136,10 @@ class _detalhesState extends State<detalhes> {
         backgroundColor: Colors.blueGrey,
         foregroundColor: branco,
         onPressed: () {
-          // Respond to button press
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => Carrinho()
+          )
+          );
         },
         label: Text('Adicionar ao Carrinho',style: TextStyle(
           fontSize: 12
